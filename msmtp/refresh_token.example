@@ -1,0 +1,2 @@
+# Put your OAuth2 refresh token here
+# This file should be mounted or copied as /etc/msmtp/refresh_token in the container

@@ -1,0 +1,24 @@
+myhostname = mailrelay.local
+myorigin = localhost
+mydestination = localhost
+relayhost =
+
+inet_interfaces = all
+inet_protocols = ipv4
+
+# Trust Docker network only
+mynetworks = MYNETWORKS
+
+# Do NOT be an open relay
+smtpd_recipient_restrictions =
+    permit_mynetworks,
+    reject_unauth_destination
+
+# Disable local delivery
+local_transport = error:local delivery disabled
+
+
+default_transport = msmtp
+maillog_file = /var/log/postfix.log
+# Import environment variables for msmtp OAuth2
+import_environment = MAIL_PATH MAIL_CONFIG CLIENT_ID CLIENT_SECRET TENANT_ID MAIL_ADDRESS

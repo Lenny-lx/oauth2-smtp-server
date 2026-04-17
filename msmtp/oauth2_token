@@ -1,0 +1,26 @@
+#!/bin/sh
+# This script fetches a fresh OAuth2 access token for msmtp
+
+# Config — replace with your values
+TENANT="${TENANT_ID}"
+CLIENT_ID="${CLIENT_ID}"
+CLIENT_SECRET="${CLIENT_SECRET}"
+REFRESH_TOKEN_FILE="/etc/msmtp/refresh_token"
+
+# Read stored refresh token
+REFRESH_TOKEN=$(cat "$REFRESH_TOKEN_FILE")
+
+# Request new access token from Azure
+ACCESS_TOKEN=$(curl -s -X POST \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "client_id=$CLIENT_ID" \
+  -d "client_secret=$CLIENT_SECRET" \
+  -d "refresh_token=$REFRESH_TOKEN" \
+  -d "grant_type=refresh_token" \
+  -d "scope=offline_access https://outlook.office365.com/SMTP.Send" \
+  "https://login.microsoftonline.com/$TENANT/oauth2/v2.0/token" | jq -r '.access_token')
+
+# Output only the access token for msmtp
+echo -n "$ACCESS_TOKEN"
+
+
