@@ -146,4 +146,4 @@ postlog   unix-dgram n  -       n       -       1       postlogd
 #  flags=FRX user=list argv=/usr/lib/mailman/bin/postfix-to-mailman.py
 #  ${nexthop} ${user}
 msmtp   unix  -       n       n       -       -       pipe
-  flags=Rq user=mail argv=/etc/msmtp/msmtp-wrapper.sh -t
+  flags=DRhu user=mail argv=/etc/msmtp/msmtp-wrapper.sh -f ${sender} -- ${recipient}
