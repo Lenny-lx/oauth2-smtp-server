@@ -2,6 +2,6 @@ services:
   smtp-server:
     build: .
     ports: 
-      - "27:25"
+      - "25:25"
     env_file:
       - ".env"
